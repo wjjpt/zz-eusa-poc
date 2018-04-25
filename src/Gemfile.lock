@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    httparty (0.16.2)
+      multi_xml (>= 0.5.2)
+    json (2.1.0)
+    multi_xml (0.6.0)
+    ruby-kafka (0.5.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  httparty
+  json
+  ruby-kafka
+
+BUNDLED WITH
+   1.16.1
