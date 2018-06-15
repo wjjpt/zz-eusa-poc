@@ -19,7 +19,7 @@ end
 kafka_broker = ENV['KAFKA_BROKER'].nil? ? "127.0.0.1" : ENV['KAFKA_BROKER']
 kafka_port = ENV['KAFKA_PORT'].nil? ? "9092" : ENV['KAFKA_PORT']
 @kafka_topic = ENV['KAFKA_TOPIC'].nil? ? "eusapoc" : ENV['KAFKA_TOPIC']
-kclient = Kafka.new(seed_brokers: ["#{kafka_broker}:#{kafka_port}"], client_id: "gijonbus2k")
+kclient = Kafka.new(seed_brokers: ["#{kafka_broker}:#{kafka_port}"], client_id: "eusapoc")
 url = "https://api.meraki.com/api/v0/devices/#{device}/clients?timespan=#{time}"
 
 def w2k(url,apikey,kclient)
