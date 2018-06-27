@@ -5,7 +5,7 @@ require 'httparty'
 require 'kafka'
 
 @name = "eusapoc"
-@time = ENV['TIME'].nil? ? 10 : ENV['TIME']
+@time = ENV['TIME'].nil? ? 60 : ENV['TIME'].to_i
 device = ENV['DEVICE']
 if device.nil?
     puts "Error, DEVICE is mandatory"
@@ -20,7 +20,7 @@ kafka_broker = ENV['KAFKA_BROKER'].nil? ? "127.0.0.1" : ENV['KAFKA_BROKER']
 kafka_port = ENV['KAFKA_PORT'].nil? ? "9092" : ENV['KAFKA_PORT']
 @kafka_topic = ENV['KAFKA_TOPIC'].nil? ? "eusapoc" : ENV['KAFKA_TOPIC']
 kclient = Kafka.new(seed_brokers: ["#{kafka_broker}:#{kafka_port}"], client_id: "eusapoc")
-url = "https://api.meraki.com/api/v0/devices/#{device}/clients?timespan=#{time}"
+url = "https://api.meraki.com/api/v0/devices/#{device}/clients?timespan=#{@time}"
 
 def w2k(url,apikey,kclient)
     lastdigest = ""
@@ -35,7 +35,7 @@ def w2k(url,apikey,kclient)
             timestamp = Time.now.to_i
             eusahash.each do |client|
                 client["timestamp"] = timestamp
-                #puts "bus asset: #{JSON.pretty_generate(bus)}\n" unless ENV['DEBUG'].nil?
+                puts "client: #{JSON.pretty_generate(client.to_json)}\n" unless ENV['DEBUG'].nil?
                 kclient.deliver_message("#{client.to_json}",topic: @kafka_topic)
             end
 
